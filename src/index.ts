@@ -1,10 +1,10 @@
-import { config } from 'dotenv';
+import { config } from "dotenv";
 config();
 
-import { checkENV } from './utils/checkENV';
+import { checkENV } from "./utils/checkENV";
 checkENV();
 
-import { initClient } from './client';
+import { initClient } from "./client";
 initClient();
 
 
