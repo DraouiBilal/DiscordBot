@@ -1,4 +1,4 @@
-import { IntentsBitField } from 'discord.js';
+import { IntentsBitField } from "discord.js";
 
 export const intents =  [
     IntentsBitField.Flags.Guilds, 

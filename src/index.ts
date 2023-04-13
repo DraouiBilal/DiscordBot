@@ -6,5 +6,3 @@ checkENV();
 
 import { initClient } from "./client";
 initClient();
-
-
