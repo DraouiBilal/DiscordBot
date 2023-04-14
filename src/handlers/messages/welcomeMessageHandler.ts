@@ -1,4 +1,3 @@
-import { type channel } from "diagnostics_channel";
 import {type GuildMember, type Client, TextChannel } from "discord.js";
 
 export const welcomeMessage = (client:Client)=>async (memeber:GuildMember)=>{
@@ -12,5 +11,4 @@ export const welcomeMessage = (client:Client)=>async (memeber:GuildMember)=>{
             general.send(`welcome ${memeber.user} be careful drale is sudo`);
         }
     });
-
-}
+};
