@@ -4,7 +4,7 @@ import chatSonic from "../chatsonic/chatsonic";
 export const chatCommand = async (interaction: ChatInputCommandInteraction) => {
     
     if(!interaction.guild) return;
-
+    interaction.deferReply();
     const message = interaction.options.getString("message") ?? "";
 
     let response = "Unfortunately, I can't talk at the moement.";
@@ -17,5 +17,5 @@ export const chatCommand = async (interaction: ChatInputCommandInteraction) => {
             console.error(err);
     }
 
-    interaction.reply(response);
+    interaction.editReply(response);
 };
