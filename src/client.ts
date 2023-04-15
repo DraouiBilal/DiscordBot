@@ -1,5 +1,5 @@
 import { Events, Client } from "discord.js";
-import { ready, answerMessage} from "./handlers";
+import { ready, answerMessage, commandsHandler, guildCreateHandler} from "./handlers";
 import { intents } from "./config/intents";
 import { welcomeMessage } from "./handlers/messages/welcomeMessageHandler";
 
@@ -12,7 +12,14 @@ export const initClient = () => {
     // Once the client is logged in
     client.on(Events.ClientReady, ready(client));
 
-    client.on(Events.GuildMemberAdd,welcomeMessage(client));
+    // Set commands in guild
+    client.on(Events.GuildCreate, guildCreateHandler(client));
+
+    // Give welcome message
+    client.on(Events.GuildMemberAdd, welcomeMessage(client));
+
+    // Answer commands
+    client.on(Events.InteractionCreate, commandsHandler(client));
 
     // Answer to messages
     client.on(Events.MessageCreate, answerMessage(client));
