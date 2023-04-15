@@ -8,12 +8,13 @@ export const commandsHandler = (client:Client) => async (interaction:Interaction
 
     switch (interaction.commandName) {
         case "sudo":
-            sudoCommand(interaction);
+            await sudoCommand(interaction);
             break;
         case "chat":
-            chatCommand(interaction);
+            await chatCommand(interaction);
             break;
         default:
+            interaction.reply("This command is not yet implemented.");
             break;
     }
 
