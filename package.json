@@ -14,9 +14,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/jsdom": "^21.1.1",
     "api": "^5.0.8",
     "discord.js": "^14.9.0",
-    "dotenv": "^16.0.3"
+    "dotenv": "^16.0.3",
+    "jsdom": "^21.1.1"
   },
   "devDependencies": {
     "@types/node": "^18.15.11",
