@@ -1,4 +1,4 @@
-import {type ChatInputCommandInteraction} from "discord.js";
+import {ChannelType, type ChatInputCommandInteraction} from "discord.js";
 import { getDeals } from "../deals/getDeals";
 import { dealsType } from "../../types/dealsType";
 import { Game } from "../../types/game";
@@ -20,19 +20,19 @@ export const gameDealsCommand = async (interaction: ChatInputCommandInteraction)
 
             case "bestDeals":{
                 deals = await getDeals(dealsType.bestDeals) ?? [];
-                reply = "**Best deals**";
+                reply = "**Best deals**\n";
             }    
             break;
 
             case "newDeals":{
                 deals = await getDeals(dealsType.newDeals) ?? [];
-                reply = "**New deals**";
+                reply = "**New deals**}\n";
             }
             break;
 
             case "historicalLow":{
                 deals = await getDeals(dealsType.historicalLow) ?? [];
-                reply = "**Historical low deals**";
+                reply = "**Historical low deals**\n";
             }
             break;
 
@@ -45,8 +45,12 @@ export const gameDealsCommand = async (interaction: ChatInputCommandInteraction)
         for (const game of deals) {
             reply += "\n**Game: **" + game.name + "\n" + "**Price: **" + game.Price + "\n" + "**URL: **"+ game.URL +"\n";
         }
-
-        await interaction.editReply(reply);
+        let channel = interaction.guild?.channels.cache.find(channel => channel.name==="game-deals");
+        if(!channel){
+            channel = await interaction.guild?.channels.create({name:"game-deals",type: ChannelType.GuildAnnouncement});
+            channel?.send(reply);
+        }
+        await interaction.editReply("Check the game-deals channel");
     }
 
     catch(err: unknown){
