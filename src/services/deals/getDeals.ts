@@ -17,7 +17,8 @@ export const getDeals = async (dealType: number) => {
             games.push({
                 name: game.querySelector(".title")?.innerHTML ?? "",
                 URL: "https://gg.deals"+ game.querySelector(".title")?.getAttribute("href") ?? "",
-                Price: game.querySelector(".price-inner.numeric")?.innerHTML ?? ""
+                Price: game.querySelector(".price-inner.numeric")?.innerHTML ?? "",
+                ImageURL: game.querySelector(".game-picture img")?.getAttribute("src") ?? ""
             });
         }
 
