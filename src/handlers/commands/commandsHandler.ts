@@ -2,6 +2,7 @@ import {type Interaction, type Client} from "discord.js";
 import { sudoCommand } from "../../services/commands/sudoCommand";
 import { chatCommand } from "../../services/commands/chatCommand";
 import { gameDealsCommand } from "../../services/commands/gameDealsCommand";
+import { gamePriceCommand } from "../../services/commands/gamePriceCommand";
 
 export const commandsHandler = (client:Client) => async (interaction:Interaction) =>{
     
@@ -18,6 +19,10 @@ export const commandsHandler = (client:Client) => async (interaction:Interaction
 
         case "game-deals":
             await gameDealsCommand(interaction);
+            break;
+
+        case "game-price":
+            await gamePriceCommand(interaction);
             break;
             
         default:

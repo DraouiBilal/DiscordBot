@@ -1,6 +1,6 @@
 import {type ChatInputCommandInteraction} from "discord.js";
 import chatSonic from "../chatsonic/chatsonic";
-import { session } from "../session/session";
+import { session } from "../session/chatSession";
 
 export const chatCommand = async (interaction: ChatInputCommandInteraction) => {
     
