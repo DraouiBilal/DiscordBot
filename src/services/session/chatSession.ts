@@ -1,8 +1,8 @@
-import { History } from "../../types/session";
+import { type ChatHistory } from "../../types/session";
 
 const TIMEOUT = 1000 * 60 * 5;
 
-const userHistory = new Map<string, {timeout: NodeJS.Timeout, history: History}>();
+const userHistory = new Map<string, {timeout: NodeJS.Timeout, history: ChatHistory}>();
 
 const endSession = (userId: string) => {
     userHistory.delete(userId);

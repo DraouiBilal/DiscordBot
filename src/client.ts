@@ -5,9 +5,10 @@ import { welcomeMessage } from "./handlers/messages/welcomeMessageHandler";
 
 const token = process.env.BOT_TOKEN;
 
-export const initClient = () => {
+const client = new Client({intents});
 
-    const client = new Client({intents});
+export const initClient = async () => {
+
 
     // Once the client is logged in
     client.on(Events.ClientReady, ready(client));
@@ -25,5 +26,9 @@ export const initClient = () => {
     client.on(Events.MessageCreate, answerMessage(client));
 
     // Login bot with token
-    client.login(token);
+    await client.login(token);
+
+    return client;
 };
+
+export default client;
