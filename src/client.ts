@@ -11,19 +11,19 @@ export const initClient = async () => {
 
 
     // Once the client is logged in
-    client.on(Events.ClientReady, ready(client));
+    client.on(Events.ClientReady, ready);
 
     // Set commands in guild
-    client.on(Events.GuildCreate, guildCreateHandler(client));
+    client.on(Events.GuildCreate, guildCreateHandler);
 
     // Give welcome message
-    client.on(Events.GuildMemberAdd, welcomeMessage(client));
+    client.on(Events.GuildMemberAdd, welcomeMessage);
 
     // Answer commands
-    client.on(Events.InteractionCreate, commandsHandler(client));
+    client.on(Events.InteractionCreate, commandsHandler);
 
     // Answer to messages
-    client.on(Events.MessageCreate, answerMessage(client));
+    client.on(Events.MessageCreate, answerMessage);
 
     // Login bot with token
     await client.login(token);

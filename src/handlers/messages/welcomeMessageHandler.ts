@@ -1,6 +1,8 @@
 import {type GuildMember, type Client, TextChannel } from "discord.js";
+import client from "../../client";
 
-export const welcomeMessage = (client:Client)=>async (memeber:GuildMember)=>{
+
+export const welcomeMessage = async (memeber:GuildMember)=>{
 
     //fetch the general channel by it ID
     let general: TextChannel | null = null;
