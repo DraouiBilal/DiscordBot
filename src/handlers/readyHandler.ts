@@ -1,6 +1,6 @@
-import { type Client } from "discord.js";
+import client from "../client";
 
-export const ready = (client: Client) => async () => {
+export const ready = async () => {
     if (!client.user) return;
     console.log(`Logged in as ${client.user.tag}!`);
     

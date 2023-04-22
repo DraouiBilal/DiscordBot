@@ -4,7 +4,7 @@ import { chatCommand } from "../../services/commands/chatCommand";
 import { gameDealsCommand } from "../../services/commands/gameDealsCommand";
 import { gamePriceCommand } from "../../services/commands/gamePriceCommand";
 
-export const commandsHandler = (client:Client) => async (interaction:Interaction) =>{
+export const commandsHandler = async (interaction:Interaction) =>{
     
     if(!interaction.isChatInputCommand()) return;
 
