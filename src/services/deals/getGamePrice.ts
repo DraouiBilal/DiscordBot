@@ -6,7 +6,7 @@ export const getGamePrice = async (game: string) => {
     let DOM: JSDOM | null = null;
 
     try {
-        DOM = await DOMParser(`https://gg.deals/game/${game.split(" ").join("-")}`);
+        DOM = await DOMParser(`https://gg.deals/game/${game.trim().toLowerCase().replace(/[^a-zA-Z\s]/g, "").split(" ").join("-")}`);
     }
     catch (err: unknown) {
 
