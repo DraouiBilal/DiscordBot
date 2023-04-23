@@ -9,7 +9,6 @@ const client = new Client({intents});
 
 export const initClient = async () => {
 
-
     // Once the client is logged in
     client.on(Events.ClientReady, ready);
 
