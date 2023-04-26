@@ -14,7 +14,7 @@ export const gameDealsCommand = async (interaction: ChatInputCommandInteraction)
 
     try{
         
-        await interaction.deferReply();
+    await interaction.deferReply();
 
         switch (dealOption) {
 
