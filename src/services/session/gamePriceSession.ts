@@ -1,64 +1,63 @@
 import { getGamePrice } from "../deals/getGamePrice";
 import client from "../../client";
+import prisma from "../../db/prismaClient";
 
 
-const INTERVAL = 1000 * 2;
-
-const userGamePrice = new Map<string, { game: string, price: number }[]>();
+const INTERVAL = 1000 * 60 * 60 * 24;
 
 
-const endSession = (userId: string) => {
-    userGamePrice.delete(userId);
-};
+let interval: NodeJS.Timer | null = null;
 
+const startSession = () => {
+    if (interval) return;
 
-setInterval(() => {
-    userGamePrice.forEach(async (value, key) => {
-        await Promise.all(value.map(async (game) => {
+    interval = setInterval(async () => {
+        const userGamesHistory = await prisma.gamePriceHistory.findMany();
+        
+        await Promise.all(userGamesHistory.map(async (game) => {
             const onlinePrice = await getGamePrice(game.game);
 
             if (onlinePrice > game.price) {
                 return;
             }
-            client.users.fetch(key).then((user) => {
+            
+            client.users.fetch(game.userId).then((user) => {
                 user.send(`The price of ${game.game} is now ${onlinePrice}€. Go get it!`);
+                prisma.gamePriceHistory.delete({
+                    where: {
+                        id: game.id
+                    }
+                });
             });
-            value.splice(value.indexOf(game), 1);
-            endSession(key);
-
             return game;
         }));
 
-    });
-}, INTERVAL);
-
-const startSession = (userId: string) => {
-    const userSession = userGamePrice.get(userId);
-
-    if(userSession){
-        return;
-    }
-
-    userGamePrice.set(userId, []);
+    }, INTERVAL);
 };
 
 const addGameToSession = async (userId: string, game: string, price: number) => {
-    const userSession = userGamePrice.get(userId);
-
-    if(!userSession){
-        return;
+    let timeout: NodeJS.Timer | null = null;
+    let duration = 1;
+    try {
+        await prisma.gamePriceHistory.create({
+            data: {
+                game,
+                price,
+                userId,
+                createdAt: new Date()
+            }
+        });
+        if (timeout)
+            clearTimeout(timeout);
+    } catch (err) {
+        timeout = setTimeout(() => {
+            duration *= 2;
+            addGameToSession(userId, game, price);
+        }, duration * 1000);
     }
-    
-    const found = await getGamePrice(game);
-   
-    if(found > price)
-        userSession.push({ game, price });
-   
-    return found;
 };
 
 export const gamePriceSession = {
-    userGamePrice,
     startSession,
     addGameToSession
 };

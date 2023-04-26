@@ -8,12 +8,14 @@
     "start": "node dist/index.js",
     "build": "tsc -p .",
     "dev": "nodemon src/index.ts",
+    "docker": "docker-compose -f docker-compose.dev.yml up --build",
     "lint": "npx eslint src"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@prisma/client": "4.13.0",
     "api": "^5.0.8",
     "discord.js": "^14.9.0",
     "dotenv": "^16.0.3",
@@ -26,6 +28,7 @@
     "@typescript-eslint/parser": "^5.58.0",
     "eslint": "^8.38.0",
     "nodemon": "^2.0.22",
+    "prisma": "4.13.0",
     "ts-node": "^10.9.1",
     "typescript": "^5.0.4"
   }
