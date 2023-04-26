@@ -2,6 +2,7 @@ import { Events, Client } from "discord.js";
 import { ready, answerMessage, commandsHandler, guildCreateHandler} from "./handlers";
 import { intents } from "./config/intents";
 import { welcomeMessage } from "./handlers/messages/welcomeMessageHandler";
+import { gamePriceSession } from "./services/session/gamePriceSession";
 
 const token = process.env.BOT_TOKEN;
 
@@ -26,6 +27,9 @@ export const initClient = async () => {
 
     // Login bot with token
     await client.login(token);
+
+    // Check games prices
+    gamePriceSession.startSession();
 
     return client;
 };

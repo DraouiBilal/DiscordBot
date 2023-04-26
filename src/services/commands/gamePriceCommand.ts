@@ -1,10 +1,10 @@
 import { EmbedBuilder, type ChatInputCommandInteraction } from "discord.js";
 import { gamePriceSession } from "../session/gamePriceSession";
 import { searchGame } from "../deals/searchGame";
+import { getGamePrice } from "../deals/getGamePrice";
 
 
 export const gamePriceCommand = async (interaction: ChatInputCommandInteraction) => {
-
 
     const game = interaction.options.getString("game-name") ?? "";
     const price = interaction.options.getNumber("price") ?? Infinity;
@@ -13,18 +13,16 @@ export const gamePriceCommand = async (interaction: ChatInputCommandInteraction)
     try {
         await interaction.deferReply();
 
-        gamePriceSession.startSession(interaction.user.id);
-
         let reply = "";
         let found: number | undefined;
         try {
-            found = await gamePriceSession.addGameToSession(interaction.user.id, game, price);
+            found = await getGamePrice(game);
         } catch (err) {
             reply = `The game "${game}" was not found, here are the possible answers:`;
             try {
                 const games = await searchGame(game);
                 if (!games) {
-                    interaction.editReply(reply);
+                    interaction.editReply("No game found");
                     return;
                 }
 
@@ -45,11 +43,10 @@ export const gamePriceCommand = async (interaction: ChatInputCommandInteraction)
         
         found?  
             found > price?
-                reply = `The price of ${game} is ${found}€. You will be notified when it is lower than ${price}€`:
+                (reply = `The price of ${game} is ${found}€. You will be notified when it is lower than ${price}€`) && gamePriceSession.addGameToSession(interaction.user.id, game, price):
                 reply = `The price of ${game} is ${found}€. Go get it!`
                 :
             reply = "No game found";
-        
 
         interaction.editReply(reply);
     }
