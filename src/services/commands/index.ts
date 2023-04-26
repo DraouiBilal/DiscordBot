@@ -3,3 +3,4 @@ export * from "./sudoCommand";
 export * from "./chatCommand";
 export * from "./gamePriceCommand";
 export * from "./gameDealsCommand";
+export * from "./downloadVideoCommand";

@@ -33,6 +33,20 @@ export const commands =[
         .addNumberOption(option =>
             option.setName("price")
             .setDescription("The price to be notified")
-            .setRequired(true))
+            .setRequired(true)),
+    
+    new SlashCommandBuilder()
+        .setName("download-video")
+        .setDescription("Download youtube videos")
+        .addStringOption(option => option.setName("url").setDescription("The video URL").setRequired(true)) 
+        .addStringOption(option => 
+            option.setName("media-type")
+            .setDescription("Chose the media type")
+            .setRequired(true)
+            .addChoices(
+                {name: "video", value:".mp4"},
+                {name: "audio", value: ".mp3"}
+            ).setRequired(true)
+        )    
             
 ];
