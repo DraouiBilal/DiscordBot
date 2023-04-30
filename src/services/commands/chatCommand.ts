@@ -6,7 +6,7 @@ export const chatCommand = async (interaction: ChatInputCommandInteraction) => {
     
     if(!interaction.guild) return;
 
-    interaction.deferReply();
+    await interaction.deferReply();
 
     const message = interaction.options.getString("message") ?? "";
 
